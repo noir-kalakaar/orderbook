@@ -28,10 +28,10 @@ class Visualizer:
         
         # Set up the animation
         self.ani = animation.FuncAnimation(
-            self.fig, self.update, interval=100, blit=False
+            self.fig, self.update, interval=100,cache_frame_data=False, blit=False
         )
         
-        plt.tight_layout()
+        # plt.tight_layout()
         
     def update(self, frame):
         """Update the visualization with current order book state"""
@@ -76,7 +76,7 @@ class Visualizer:
         else:
             self.fig.suptitle('Limit Order Book Simulation')
             
-        plt.tight_layout()
+        # plt.tight_layout()
         
     def show(self):
         """Display the visualization"""

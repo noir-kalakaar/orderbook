@@ -81,7 +81,7 @@ class OrderBook:
         
         for price, order in sorted_bids:
             cumulative_qty += order.qty
-            bids.append((price, cumulative_qty))
+            bids.append((order.price, cumulative_qty))
         
         # Process asks (min-heap)
         asks = []

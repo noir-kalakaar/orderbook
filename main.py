@@ -31,7 +31,7 @@ def market_maker_bot(orderbook, visualizer):
         
         time.sleep(0.1)  # Wait 0.1 seconds between orders
 
-async def live_mode(orderbook, visualizer):
+def live_mode(orderbook, visualizer):
     """Live mode using Binance WebSocket feed"""
     # Import here to avoid issues with async
     from binance_feed import start_binance_feed
@@ -76,7 +76,26 @@ if __name__ == "__main__":
     elif choice == "2":
         # Start live mode
         print("Starting live mode with Binance WebSocket...")
-        live_mode(orderbook, visualizer)
+        
+        # 1. Define the async wrapper
+        from binance_feed import start_binance_feed
+        def run_async():
+            # Create a new event loop for this thread
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            loop.run_until_complete(start_binance_feed(orderbook))
+            
+        # 2. Start Binance Feed in Background Thread
+        t = threading.Thread(target=run_async)
+        t.daemon = True
+        t.start()
+        
+        # 3. Start the GUI on the Main Thread (Blocking)
+        print("Live View running... Press Ctrl+C to stop.")
+    try:
+        visualizer.show()
+    except KeyboardInterrupt:
+        print("\n[System] Live view closed gracefully.")
     else:
         print("Invalid choice. Starting simulation mode by default.")
         # Start market maker bot in a thread
