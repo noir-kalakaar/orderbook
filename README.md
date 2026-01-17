@@ -43,3 +43,39 @@ Real-time rendering using Matplotlib's `FuncAnimation`:
 ## Usage
 
 ### Dependencies
+pip install matplotlib websockets
+
+
+
+
+### Running the Application
+
+
+python main.py
+
+
+
+
+1. Choose mode:
+
+   - **Mode 1**: Simulation Mode (Market Maker bot)
+
+   - **Mode 2**: Live Mode (Binance WebSocket feed)
+
+
+
+2. For live Bitcoin data, select "Mode 2" to connect to Binance's real-time stream
+
+
+
+## Project Structure
+
+
+
+- `main.py`: Main application entry point with mode selection
+
+- `orderbook.py`: Core OrderBook implementation with heap-based data structures
+
+- `visualizer.py`: Real-time visualization using Matplotlib
+
+- `binance_feed.py`: Binance WebSocket integration for live data
