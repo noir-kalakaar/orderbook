@@ -3,6 +3,10 @@ import random
 import time
 from orderbook import OrderBook
 from visualizer import Visualizer
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+import numpy as np
+from collections import defaultdict
 
 def market_maker_bot(orderbook, visualizer):
     """Market maker bot that places orders around mid-price"""
@@ -21,9 +25,9 @@ def market_maker_bot(orderbook, visualizer):
         orderbook.add_order("sell", sell_price, sell_qty)
         
         # Update visualization
-        visualizer.update(orderbook)
+        # visualizer.update(orderbook)
         
-        time.sleep(0.5)  # Wait 0.5 seconds between orders
+        time.sleep(0.1)  # Wait 0.5 seconds between orders
 
 if __name__ == "__main__":
     # Initialize order book and visualizer
@@ -31,4 +35,10 @@ if __name__ == "__main__":
     visualizer = Visualizer(orderbook)
     
     # Start market maker bot
-    market_maker_bot(orderbook, visualizer)
+    import threading
+    bot_thread = threading.Thread(target=market_maker_bot, args=(orderbook, visualizer))
+    bot_thread.daemon = True
+    bot_thread.start()
+    
+    # Show the visualization
+    visualizer.show()
